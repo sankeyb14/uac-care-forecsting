@@ -228,3 +228,50 @@ st.plotly_chart(fig6, use_container_width=True)
 
 st.subheader("Monthly Summary")
 st.dataframe(monthly, use_container_width=True)
+# DATA QUALITY & REPORTING COVERAGE
+
+st.divider()
+st.header("Data Quality & Reporting Coverage")
+
+expected_days = (
+    df['Date'].max() - df['Date'].min()
+).days + 1
+
+actual_records = df['Date'].nunique()
+missing_days = expected_days - actual_records
+
+coverage = (actual_records / expected_days) * 100
+
+col1, col2, col3 = st.columns(3)
+
+col1.metric("Expected Calendar Days", f"{expected_days:,}")
+col2.metric("Recorded Observations", f"{actual_records:,}")
+col3.metric("Reporting Coverage", f"{coverage:.1f}%")
+
+st.warning(
+    f"{missing_days} calendar days have no recorded observations. "
+    "Forecasts should therefore be interpreted cautiously."
+)
+
+# Weekday reporting pattern
+weekday_summary = (
+    df.assign(Weekday=df['Date'].dt.day_name())
+    .groupby('Weekday')
+    .size()
+    .reindex([
+        'Monday', 'Tuesday', 'Wednesday',
+        'Thursday', 'Friday', 'Saturday', 'Sunday'
+    ], fill_value=0)
+    .reset_index(name='Observations')
+)
+
+fig7 = px.bar(
+    weekday_summary,
+    x='Weekday',
+    y='Observations',
+    title='Reporting Frequency by Weekday'
+)
+
+st.plotly_chart(fig7, use_container_width=True)
+
+st.dataframe(weekday_summary, use_container_width=True)
