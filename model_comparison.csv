@@ -1,0 +1,5 @@
+Model,MAE,RMSE,MAPE (%)
+Naive Persistence,10.3,14.08,0.46
+Moving Average,41.03,50.11,1.83
+Random Forest,61.7,83.24,2.86
+Gradient Boosting,75.67,97.62,3.56
