@@ -156,3 +156,32 @@ st.caption(
     "statistical confidence intervals. Discharge forecasts are not "
     "independently validated."
 )
+# HISTORICAL PERIOD COMPARISON
+
+st.divider()
+st.header("Historical Period Comparison")
+
+df['Period'] = df['Date'].apply(
+    lambda x: 'Before January 2025'
+    if x < pd.Timestamp('2025-01-01')
+    else 'January 2025 Onwards'
+)
+
+period_summary = df.groupby('Period').agg({
+    'Children in HHS Care': 'mean',
+    'Children transferred out of CBP custody': 'mean',
+    'Children discharged from HHS Care': 'mean'
+}).round(2)
+
+st.subheader("Average Daily Reporting Values")
+st.dataframe(period_summary, use_container_width=True)
+
+fig4 = px.bar(
+    period_summary.reset_index(),
+    x='Period',
+    y='Children in HHS Care',
+    title='Average HHS Care Population: Before vs After January 2025',
+    text_auto=True
+)
+
+st.plotly_chart(fig4, use_container_width=True)
