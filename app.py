@@ -185,3 +185,46 @@ fig4 = px.bar(
 )
 
 st.plotly_chart(fig4, use_container_width=True)
+# MONTHLY TREND ANALYSIS
+
+st.divider()
+st.header("Monthly Operational Trends")
+
+monthly = (
+    df.set_index('Date')
+    .resample('ME')
+    .agg({
+        'Children in HHS Care': 'mean',
+        'Children transferred out of CBP custody': 'mean',
+        'Children discharged from HHS Care': 'mean'
+    })
+    .reset_index()
+)
+
+monthly['Month'] = monthly['Date'].dt.strftime('%b %Y')
+
+fig5 = px.line(
+    monthly,
+    x='Date',
+    y='Children in HHS Care',
+    markers=True,
+    title='Monthly Average HHS Care Population'
+)
+
+st.plotly_chart(fig5, use_container_width=True)
+
+fig6 = px.line(
+    monthly,
+    x='Date',
+    y=[
+        'Children transferred out of CBP custody',
+        'Children discharged from HHS Care'
+    ],
+    markers=True,
+    title='Monthly Average Transfers vs Discharges'
+)
+
+st.plotly_chart(fig6, use_container_width=True)
+
+st.subheader("Monthly Summary")
+st.dataframe(monthly, use_container_width=True)
