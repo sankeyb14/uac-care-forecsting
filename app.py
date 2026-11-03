@@ -275,3 +275,39 @@ fig7 = px.bar(
 st.plotly_chart(fig7, use_container_width=True)
 
 st.dataframe(weekday_summary, use_container_width=True)
+# AUTOMATED BUSINESS INSIGHTS
+
+st.divider()
+st.header("Operational Insights")
+
+avg_hhs_before = before_hhs = df[
+    df['Date'] < '2025-01-01'
+]['Children in HHS Care'].mean()
+
+avg_hhs_after = after_hhs = df[
+    df['Date'] >= '2025-01-01'
+]['Children in HHS Care'].mean()
+
+change_pct = (
+    (avg_hhs_after - avg_hhs_before)
+    / avg_hhs_before
+) * 100
+
+st.subheader("HHS Care Population Change")
+
+st.metric(
+    "Change after January 2025",
+    f"{change_pct:.1f}%",
+    delta=f"{change_pct:.1f}%"
+)
+
+st.write(
+    f"Average HHS care population changed from "
+    f"{avg_hhs_before:,.0f} before January 2025 "
+    f"to {avg_hhs_after:,.0f} from January 2025 onwards."
+)
+
+st.info(
+    "This is a descriptive historical comparison. "
+    "It does not establish the cause of the population decline."
+)
