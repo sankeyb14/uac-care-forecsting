@@ -394,3 +394,40 @@ st.info(
     "not necessarily calendar days. Historical performance "
     "does not guarantee future accuracy."
 )
+# KEY FINDINGS AND LIMITATIONS
+
+st.divider()
+st.header("Key Findings & Operational Implications")
+
+st.markdown("""
+### Key Findings
+
+- **Short-term persistence:** The latest observed HHS care population
+  is a useful baseline for near-term forecasting.
+- **Increasing forecast uncertainty:** Forecast errors increase as
+  the prediction horizon extends from 1 to 14 recorded observations.
+- **Different historical patterns:** Average HHS care population
+  was approximately 7,807 before January 2025 and 2,527 from
+  January 2025 onward.
+- **Longer-horizon caution:** The 14-observation MAPE was 11.81%
+  in 2025, compared with 7.94% in 2024.
+
+### Limitations
+
+- The dataset contains 355 missing calendar dates. Missing dates
+  have not been treated as zero-demand days.
+- Forecast horizons refer to recorded observations, not calendar days.
+- The persistence baseline is a benchmark, not proof that future
+  demand will remain constant.
+- The observed decline in HHS care population does not establish
+  its underlying cause.
+- Discharge demand forecasts have not been independently validated.
+- The displayed error ranges are illustrative, not calibrated
+  statistical prediction intervals.
+
+### Operational Implication
+
+Use the forecasts as planning signals rather than fixed estimates.
+Longer-horizon decisions should account for uncertainty, reporting
+gaps, and changes in the underlying data patterns.
+""")
