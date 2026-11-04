@@ -311,3 +311,86 @@ st.info(
     "This is a descriptive historical comparison. "
     "It does not establish the cause of the population decline."
 )
+# EXPANDED FORECAST VALIDATION
+
+st.divider()
+st.header("Forecast Model Validation")
+
+st.caption(
+    "Historical persistence-baseline performance across "
+    "multiple forecast horizons and years."
+)
+
+# Load validation datasets
+expanded_validation = pd.read_csv("expanded_validation.csv")
+yearly_mae = pd.read_csv("yearly_mae_results.csv")
+yearly_mape = pd.read_csv("yearly_mape_results.csv")
+
+# Overall validation
+st.subheader("Overall Historical Validation")
+
+st.dataframe(
+    expanded_validation,
+    use_container_width=True,
+    hide_index=True
+)
+
+fig_validation = px.line(
+    expanded_validation,
+    x="Horizon",
+    y="MAE",
+    markers=True,
+    title="Forecast Error by Prediction Horizon"
+)
+
+st.plotly_chart(fig_validation, use_container_width=True)
+
+# Year-wise MAE
+st.subheader("Forecast Accuracy by Year — MAE")
+
+mae_summary = yearly_mae.pivot_table(
+    index="Horizon",
+    columns="Year",
+    values="Absolute_Error",
+    aggfunc="mean"
+)
+
+st.dataframe(
+    mae_summary.round(2),
+    use_container_width=True
+)
+
+# Year-wise MAPE
+st.subheader("Relative Forecast Error by Year — MAPE")
+
+mape_summary = yearly_mape.pivot_table(
+    index="Horizon",
+    columns="Year",
+    values="Percentage_Error",
+    aggfunc="mean"
+)
+
+st.dataframe(
+    mape_summary.round(2),
+    use_container_width=True
+)
+
+fig_mape = px.line(
+    yearly_mape.groupby(
+        ["Horizon", "Year"]
+    )["Percentage_Error"].mean().reset_index(),
+    x="Year",
+    y="Percentage_Error",
+    color="Horizon",
+    markers=True,
+    title="Percentage Forecast Error Across Years"
+)
+
+st.plotly_chart(fig_mape, use_container_width=True)
+
+st.info(
+    "These results use a persistence baseline. "
+    "Forecast horizons represent recorded observations, "
+    "not necessarily calendar days. Historical performance "
+    "does not guarantee future accuracy."
+)
