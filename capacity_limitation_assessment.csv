@@ -1,0 +1,4 @@
+KPI,Status,Explanation
+HHS Care Population,Available,Historical HHS care population is available.
+Facility Capacity Threshold,Unavailable in dataset,No facility capacity or maximum occupancy data provided.
+Capacity Breach Probability,Cannot be calculated,Requires a defined capacity threshold and suitable forecasting uncertainty.
