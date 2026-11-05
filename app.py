@@ -531,7 +531,14 @@ st.info(
 
 st.divider()
 st.header("Key Findings & Operational Implications")
-
+st.info(
+    "KPI availability: forecast accuracy and forecast stability are "
+    "supported by the validation results. Surge lead time and capacity "
+    "breach probability cannot be calculated reliably because the dataset "
+    "does not contain a capacity threshold or facility capacity field. "
+    "The displayed forecast error ranges are historical MAE-based "
+    "uncertainty indicators, not calibrated confidence intervals."
+)
 st.markdown("""
 ### Key Findings
 
