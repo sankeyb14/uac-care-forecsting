@@ -105,7 +105,7 @@ discharge_forecast = pd.read_csv(
 )
 
 latest_discharge = discharge_forecast[
-    "Discharge Forecast"
+    "Forecast_Discharge_Count"
 ].iloc[0]
 # Corrected post-break validation errors
 post_break_validation = pd.read_csv(
