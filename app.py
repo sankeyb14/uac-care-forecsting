@@ -160,7 +160,7 @@ fig3.add_scatter(
     fill='tonexty',
     fillcolor='rgba(100,149,237,0.2)',
     line=dict(width=0),
-    name='Illustrative error range'
+    name='Historical MAE range'
 )
 
 st.plotly_chart(fig3, use_container_width=True)
@@ -174,9 +174,10 @@ st.dataframe(
 
 st.caption(
     "Forecasts use persistence baselines over future recorded observation steps. "
-    "Error ranges use post-break validation MAE and are not calibrated "
-    "statistical confidence intervals. Discharge forecasts were validated "
-    "separately using post-break historical data."
+    "The shaded range represents the historical post-break MAE at the selected "
+    "forecast horizon and is shown as an uncertainty indicator, not a calibrated "
+    "statistical confidence or prediction interval. Discharge forecasts were "
+    "validated separately using post-break historical data."
 )
 # HISTORICAL PERIOD COMPARISON
 
