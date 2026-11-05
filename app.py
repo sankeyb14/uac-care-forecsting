@@ -100,8 +100,18 @@ horizon = st.select_slider(
 latest_hhs = df['Children in HHS Care'].iloc[-1]
 latest_discharge = df['Children discharged from HHS Care'].iloc[-1]
 
-# Walk-forward validation errors
-error_ranges = {1: 8.38, 7: 43.76, 14: 89.50}
+# Corrected post-break validation errors
+post_break_validation = pd.read_csv(
+    "post_break_multi_horizon_validation.csv"
+)
+
+error_ranges = dict(
+    zip(
+        post_break_validation["Horizon"],
+        post_break_validation["MAE"]
+    )
+)
+
 error = error_ranges[horizon]
 
 # Baseline forecast
