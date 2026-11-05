@@ -343,10 +343,14 @@ st.caption(
     "multiple forecast horizons and years."
 )
 
-# Load validation datasets
-expanded_validation = pd.read_csv("expanded_validation.csv")
-yearly_mae = pd.read_csv("yearly_mae_results.csv")
-yearly_mape = pd.read_csv("yearly_mape_results.csv")
+# Load corrected post-break validation datasets
+expanded_validation = pd.read_csv(
+    "post_break_multi_horizon_validation.csv"
+)
+
+discharge_validation = pd.read_csv(
+    "post_break_discharge_validation.csv"
+)
 
 # Overall validation
 st.subheader("Overall Historical Validation")
