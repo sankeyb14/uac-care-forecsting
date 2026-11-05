@@ -471,27 +471,49 @@ reporting gaps, and potential changes in the underlying data pattern.
 st.divider()
 st.header("Scenario Comparison")
 
-scenario_comparison = pd.read_csv("scenario_comparison.csv")
+# Load scenario file
+scenario_comparison = pd.read_csv(
+    "scenario_comparison.csv",
+    sep=None,
+    engine="python"
+)
 
-# Clean column names and values
+# Clean column names
 scenario_comparison.columns = (
     scenario_comparison.columns
-    .str.strip()
-    .str.replace("\ufeff", "", regex=False)
-)
-
-scenario_comparison["Scenario"] = (
-    scenario_comparison["Scenario"]
     .astype(str)
     .str.strip()
+    .str.strip("|")
+    .str.strip()
+    .str.replace("\\", "", regex=False)
 )
 
+# Clean cell values
+for col in scenario_comparison.columns:
+    scenario_comparison[col] = (
+        scenario_comparison[col]
+        .astype(str)
+        .str.strip()
+        .str.strip("|")
+        .str.strip()
+        .str.replace("\\", "", regex=False)
+    )
+
+# Make sure the required columns exist
+if "Scenario" not in scenario_comparison.columns or "Net_Pressure" not in scenario_comparison.columns:
+    st.error("Scenario CSV columns could not be read correctly.")
+    st.write("Columns detected by Streamlit:", scenario_comparison.columns.tolist())
+    st.write("Raw data detected:")
+    st.dataframe(scenario_comparison, use_container_width=True)
+    st.stop()
+
+# Convert Net Pressure to numeric
 scenario_comparison["Net_Pressure"] = pd.to_numeric(
     scenario_comparison["Net_Pressure"],
     errors="coerce"
 )
 
-# Remove rows where Net_Pressure could not be read
+# Remove invalid rows
 scenario_comparison = scenario_comparison.dropna(
     subset=["Net_Pressure"]
 )
@@ -517,11 +539,6 @@ fig_scenario = px.bar(
 fig_scenario.add_hline(
     y=0,
     line_dash="dash"
-)
-
-fig_scenario.update_traces(
-    texttemplate="%{y:.2f}",
-    textposition="outside"
 )
 
 st.plotly_chart(
