@@ -339,8 +339,8 @@ st.divider()
 st.header("Forecast Model Validation")
 
 st.caption(
-    "Historical persistence-baseline performance across "
-    "multiple forecast horizons and years."
+    "Post-break persistence-baseline performance across "
+    "multiple forecast horizons."
 )
 
 # Load corrected post-break validation datasets
