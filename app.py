@@ -352,8 +352,14 @@ discharge_validation = pd.read_csv(
     "post_break_discharge_validation.csv"
 )
 
-# Overall validation
-st.subheader("Overall Historical Validation")
+# Overall HHS care-load validation
+st.subheader("Post-Break HHS Care Forecast Validation")
+
+st.caption(
+    "Persistence-baseline performance evaluated using data from "
+    "January 2025 onward. Horizons represent future recorded observations, "
+    "not necessarily calendar days."
+)
 
 st.dataframe(
     expanded_validation,
@@ -366,59 +372,41 @@ fig_validation = px.line(
     x="Horizon",
     y="MAE",
     markers=True,
-    title="Forecast Error by Prediction Horizon"
+    title="HHS Care Forecast Error by Horizon"
 )
 
 st.plotly_chart(fig_validation, use_container_width=True)
 
-# Year-wise MAE
-st.subheader("Forecast Accuracy by Year — MAE")
 
-mae_summary = yearly_mae.pivot_table(
-    index="Horizon",
-    columns="Year",
-    values="Absolute_Error",
-    aggfunc="mean"
+# Discharge-demand validation
+st.subheader("Post-Break Discharge Forecast Validation")
+
+st.caption(
+    "Discharge forecasts were evaluated separately using the same "
+    "post-break validation approach. MAPE excludes observations where "
+    "actual discharge demand was zero."
 )
 
 st.dataframe(
-    mae_summary.round(2),
-    use_container_width=True
+    discharge_validation,
+    use_container_width=True,
+    hide_index=True
 )
 
-# Year-wise MAPE
-st.subheader("Relative Forecast Error by Year — MAPE")
-
-mape_summary = yearly_mape.pivot_table(
-    index="Horizon",
-    columns="Year",
-    values="Percentage_Error",
-    aggfunc="mean"
-)
-
-st.dataframe(
-    mape_summary.round(2),
-    use_container_width=True
-)
-
-fig_mape = px.line(
-    yearly_mape.groupby(
-        ["Horizon", "Year"]
-    )["Percentage_Error"].mean().reset_index(),
-    x="Year",
-    y="Percentage_Error",
-    color="Horizon",
+fig_discharge = px.line(
+    discharge_validation,
+    x="Horizon",
+    y="MAE",
     markers=True,
-    title="Percentage Forecast Error Across Years"
+    title="Discharge Forecast Error by Horizon"
 )
 
-st.plotly_chart(fig_mape, use_container_width=True)
+st.plotly_chart(fig_discharge, use_container_width=True)
 
 st.info(
-    "These results use a persistence baseline. "
-    "Forecast horizons represent recorded observations, "
-    "not necessarily calendar days. Historical performance "
-    "does not guarantee future accuracy."
+    "Forecast horizons represent recorded observations rather than "
+    "calendar days. Historical validation performance does not guarantee "
+    "future accuracy."
 )
 # KEY FINDINGS AND LIMITATIONS
 
