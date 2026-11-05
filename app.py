@@ -104,7 +104,11 @@ discharge_forecast = pd.read_csv(
     "post_break_future_discharge_forecast.csv"
 )
 
-latest_discharge = discharge_forecast[
+selected_discharge = discharge_forecast[
+    discharge_forecast["Horizon"] == horizon
+]
+
+latest_discharge = selected_discharge[
     "Forecast_Discharge_Count"
 ].iloc[0]
 
