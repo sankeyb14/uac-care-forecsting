@@ -537,9 +537,10 @@ st.markdown("""
   provides the strongest baseline for near-term forecasting among the
   tested models.
 
-- **Model comparison:** Naive Persistence outperformed Random Forest,
-  Gradient Boosting, ARIMA, Exponential Smoothing, and Moving Average
-  in the post-break validation period.
+- **Model comparison:** Naive Persistence showed the strongest
+  short-horizon performance, while Random Forest achieved lower error
+  than Naive Persistence at the 14-observation horizon in the
+  post-break validation.
 
 - **Robustness of the baseline:** A March 2025 sensitivity check also
   showed Naive Persistence outperforming both Random Forest and
