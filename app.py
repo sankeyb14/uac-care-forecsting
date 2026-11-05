@@ -171,15 +171,9 @@ fig3 = px.scatter(
     forecast_data,
     x="Step",
     y="HHS Forecast",
-    title=f"{selected_model} Forecast — Horizon {horizon}"
-)
-
-fig3.add_error_y(
-    type="data",
-    symmetric=False,
-    array=forecast_data["Upper Range"] - forecast_data["HHS Forecast"],
-    arrayminus=forecast_data["HHS Forecast"] - forecast_data["Lower Range"],
-    visible=True
+    title=f"{selected_model} Forecast — Horizon {horizon}",
+    error_y=forecast_data["Upper Range"] - forecast_data["HHS Forecast"],
+    error_y_minus=forecast_data["HHS Forecast"] - forecast_data["Lower Range"]
 )
 
 fig3.update_xaxes(
