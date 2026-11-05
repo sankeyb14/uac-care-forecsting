@@ -466,3 +466,41 @@ Short-horizon forecasts can support near-term capacity awareness, while
 longer-horizon decisions should account for increasing forecast error,
 reporting gaps, and potential changes in the underlying data pattern.
 """)
+# SCENARIO COMPARISON
+
+st.divider()
+st.header("Scenario Comparison")
+
+scenario_comparison = pd.read_csv("scenario_comparison.csv")
+
+st.caption(
+    "March 2025 onward net-pressure scenarios based on the observed "
+    "distribution of the post-break operating period."
+)
+
+st.dataframe(
+    scenario_comparison,
+    use_container_width=True,
+    hide_index=True
+)
+
+fig_scenario = px.bar(
+    scenario_comparison,
+    x="Scenario",
+    y="Net_Pressure",
+    title="March 2025 Onward Net Pressure Scenarios",
+    text_auto=".2f"
+)
+
+fig_scenario.add_hline(
+    y=0,
+    line_dash="dash"
+)
+
+st.plotly_chart(fig_scenario, use_container_width=True)
+
+st.caption(
+    "Central scenario represents the March 2025 onward mean net pressure. "
+    "Lower and higher scenarios represent approximately one standard deviation "
+    "below and above the mean. These are scenario indicators, not probability forecasts."
+)
