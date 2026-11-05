@@ -107,6 +107,7 @@ discharge_forecast = pd.read_csv(
 latest_discharge = discharge_forecast[
     "Forecast_Discharge_Count"
 ].iloc[0]
+
 # Corrected post-break validation errors
 post_break_validation = pd.read_csv(
     "post_break_multi_horizon_validation.csv"
@@ -139,10 +140,24 @@ selected_model = st.selectbox(
 
 selected_column = model_options[selected_model]
 
+# Get forecast for selected horizon
 selected_forecast_value = future_model_forecasts.loc[
     future_model_forecasts["Horizon"] == horizon,
     selected_column
 ].iloc[0]
+
+# Forecast data
+forecast_data = pd.DataFrame({
+    "Step": [horizon],
+    "HHS Forecast": [selected_forecast_value],
+    "Lower Range": [
+        max(0, selected_forecast_value - error)
+    ],
+    "Upper Range": [
+        selected_forecast_value + error
+    ],
+    "Discharge Forecast": [latest_discharge]
+})
 
 # Display forecast
 st.subheader("Future HHS Care Load Forecast")
@@ -154,19 +169,17 @@ st.metric(
 
 fig3 = px.scatter(
     forecast_data,
-    x='Step',
-    y='HHS Forecast',
-    title=f'{selected_model} Forecast — Horizon {horizon}'
+    x="Step",
+    y="HHS Forecast",
+    title=f"{selected_model} Forecast — Horizon {horizon}"
 )
 
-fig3.update_traces(
-    error_y=dict(
-        type='data',
-        symmetric=False,
-        array=forecast_data['Upper Range'] - forecast_data['HHS Forecast'],
-        arrayminus=forecast_data['HHS Forecast'] - forecast_data['Lower Range'],
-        visible=True
-    )
+fig3.add_error_y(
+    type="data",
+    symmetric=False,
+    array=forecast_data["Upper Range"] - forecast_data["HHS Forecast"],
+    arrayminus=forecast_data["HHS Forecast"] - forecast_data["Lower Range"],
+    visible=True
 )
 
 fig3.update_xaxes(
@@ -177,16 +190,30 @@ fig3.update_yaxes(
     title="Children in HHS Care"
 )
 
-st.plotly_chart(fig3, use_container_width=True)
+st.plotly_chart(
+    fig3,
+    use_container_width=True
+)
+
+st.subheader("Discharge Demand Forecast")
+
+st.dataframe(
+    forecast_data[
+        ["Step", "Discharge Forecast"]
+    ],
+    use_container_width=True
+)
 
 st.caption(
-    "Forecasts use the selected model over the chosen future observation horizon. "
-    "The error bars represent the historical post-break MAE for that horizon and "
-    "are shown as an uncertainty indicator, not a calibrated statistical "
-    "confidence or prediction interval. Random Forest and Gradient Boosting "
-    "forecasts are provided for model comparison; validation performance remains "
-    "the basis for model reliability assessment."
+    "Forecasts use the selected model over the chosen future "
+    "observation horizon. The error bars use the historical "
+    "post-break validation MAE as an uncertainty indicator; "
+    "they are not calibrated statistical confidence or prediction "
+    "intervals. Random Forest and Gradient Boosting forecasts are "
+    "provided for model comparison, while validated model performance "
+    "remains the basis for reliability assessment."
 )
+
 # HISTORICAL PERIOD COMPARISON
 
 st.divider()
