@@ -173,10 +173,10 @@ st.dataframe(
 )
 
 st.caption(
-    "Forecasts are persistence baselines over future observation steps. "
-    "Error ranges use historical walk-forward MAE and are not calibrated "
-    "statistical confidence intervals. Discharge forecasts are not "
-    "independently validated."
+    "Forecasts use persistence baselines over future recorded observation steps. "
+    "Error ranges use post-break validation MAE and are not calibrated "
+    "statistical confidence intervals. Discharge forecasts were validated "
+    "separately using post-break historical data."
 )
 # HISTORICAL PERIOD COMPARISON
 
