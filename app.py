@@ -473,6 +473,29 @@ st.header("Scenario Comparison")
 
 scenario_comparison = pd.read_csv("scenario_comparison.csv")
 
+# Clean column names and values
+scenario_comparison.columns = (
+    scenario_comparison.columns
+    .str.strip()
+    .str.replace("\ufeff", "", regex=False)
+)
+
+scenario_comparison["Scenario"] = (
+    scenario_comparison["Scenario"]
+    .astype(str)
+    .str.strip()
+)
+
+scenario_comparison["Net_Pressure"] = pd.to_numeric(
+    scenario_comparison["Net_Pressure"],
+    errors="coerce"
+)
+
+# Remove rows where Net_Pressure could not be read
+scenario_comparison = scenario_comparison.dropna(
+    subset=["Net_Pressure"]
+)
+
 st.caption(
     "March 2025 onward net-pressure scenarios based on the observed "
     "distribution of the post-break operating period."
@@ -488,8 +511,7 @@ fig_scenario = px.bar(
     scenario_comparison,
     x="Scenario",
     y="Net_Pressure",
-    title="March 2025 Onward Net Pressure Scenarios",
-    text_auto=".2f"
+    title="March 2025 Onward Net Pressure Scenarios"
 )
 
 fig_scenario.add_hline(
@@ -497,7 +519,15 @@ fig_scenario.add_hline(
     line_dash="dash"
 )
 
-st.plotly_chart(fig_scenario, use_container_width=True)
+fig_scenario.update_traces(
+    texttemplate="%{y:.2f}",
+    textposition="outside"
+)
+
+st.plotly_chart(
+    fig_scenario,
+    use_container_width=True
+)
 
 st.caption(
     "Central scenario represents the March 2025 onward mean net pressure. "
