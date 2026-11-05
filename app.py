@@ -471,52 +471,7 @@ reporting gaps, and potential changes in the underlying data pattern.
 st.divider()
 st.header("Scenario Comparison")
 
-# Load scenario file
-scenario_comparison = pd.read_csv(
-    "scenario_comparison.csv",
-    sep=None,
-    engine="python"
-)
-
-# Clean column names
-scenario_comparison.columns = (
-    scenario_comparison.columns
-    .astype(str)
-    .str.strip()
-    .str.strip("|")
-    .str.strip()
-    .str.replace("\\", "", regex=False)
-)
-
-# Clean cell values
-for col in scenario_comparison.columns:
-    scenario_comparison[col] = (
-        scenario_comparison[col]
-        .astype(str)
-        .str.strip()
-        .str.strip("|")
-        .str.strip()
-        .str.replace("\\", "", regex=False)
-    )
-
-# Make sure the required columns exist
-if "Scenario" not in scenario_comparison.columns or "Net_Pressure" not in scenario_comparison.columns:
-    st.error("Scenario CSV columns could not be read correctly.")
-    st.write("Columns detected by Streamlit:", scenario_comparison.columns.tolist())
-    st.write("Raw data detected:")
-    st.dataframe(scenario_comparison, use_container_width=True)
-    st.stop()
-
-# Convert Net Pressure to numeric
-scenario_comparison["Net_Pressure"] = pd.to_numeric(
-    scenario_comparison["Net_Pressure"],
-    errors="coerce"
-)
-
-# Remove invalid rows
-scenario_comparison = scenario_comparison.dropna(
-    subset=["Net_Pressure"]
-)
+scenario_comparison = pd.read_csv("scenario_comparison.csv")
 
 st.caption(
     "March 2025 onward net-pressure scenarios based on the observed "
@@ -551,3 +506,4 @@ st.caption(
     "Lower and higher scenarios represent approximately one standard deviation "
     "below and above the mean. These are scenario indicators, not probability forecasts."
 )
+
