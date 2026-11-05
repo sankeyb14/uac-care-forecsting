@@ -77,7 +77,9 @@ st.plotly_chart(fig2, use_container_width=True)
 
 st.divider()
 st.header("Predictive Forecasting")
-
+st.caption(
+    "Forecast origin: December 21, 2025 — the latest observation in the dataset."
+)
 # Load corrected post-break model comparison
 results = pd.read_csv("post_break_model_comparison.csv")
 
