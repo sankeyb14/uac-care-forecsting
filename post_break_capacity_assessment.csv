@@ -1,0 +1,5 @@
+Assessment,Finding,Explanation
+Capacity threshold available,No,No facility or system capacity limit exists in the dataset.
+Actual capacity breach identifiable,No,Actual population cannot be compared against a capacity threshold.
+Capacity breach probability calculable,No,Probability cannot be estimated without capacity data.
+Alternative indicator available,HHS care population and net pressure,These indicators can support monitoring but cannot establish capacity breaches.

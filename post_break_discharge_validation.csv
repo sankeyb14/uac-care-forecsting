@@ -1,0 +1,4 @@
+Horizon,Observations,Nonzero Actuals,Zero Actuals Excluded,MAE,RMSE,MAPE (%)
+1,47,46,1,4.51,5.76,67.05
+7,41,40,1,4.71,5.88,64.75
+14,34,33,1,5.15,6.73,70.96

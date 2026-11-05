@@ -1,0 +1,4 @@
+Horizon,Forecast_Date_Basis,Forecast_Discharge_Count,Method
+1,2025-12-21,14.0,Naive Persistence
+7,2025-12-21,14.0,Naive Persistence
+14,2025-12-21,14.0,Naive Persistence

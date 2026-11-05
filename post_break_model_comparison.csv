@@ -1,0 +1,7 @@
+Model,MAE,RMSE,MAPE (%)
+Naive Persistence,9.29,12.42,0.4
+Random Forest,11.19,14.77,0.48
+Gradient Boosting,12.22,16.71,0.52
+Exponential Smoothing,15.68,17.69,0.67
+ARIMA,27.34,31.33,1.15
+Moving Average,31.53,34.08,1.34
