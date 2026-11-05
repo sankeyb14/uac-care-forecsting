@@ -98,8 +98,15 @@ horizon = st.select_slider(
 
 # Latest observed values
 latest_hhs = df['Children in HHS Care'].iloc[-1]
-latest_discharge = df['Children discharged from HHS Care'].iloc[-1]
 
+# Corrected post-break discharge forecast
+discharge_forecast = pd.read_csv(
+    "post_break_future_discharge_forecast.csv"
+)
+
+latest_discharge = discharge_forecast[
+    "Discharge Forecast"
+].iloc[0]
 # Corrected post-break validation errors
 post_break_validation = pd.read_csv(
     "post_break_multi_horizon_validation.csv"
