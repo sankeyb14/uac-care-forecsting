@@ -78,10 +78,15 @@ st.plotly_chart(fig2, use_container_width=True)
 st.divider()
 st.header("Predictive Forecasting")
 
-# Load model comparison
-results = pd.read_csv("model_comparison.csv")
+# Load corrected post-break model comparison
+results = pd.read_csv("post_break_model_comparison.csv")
 
-st.subheader("Model Performance Comparison")
+st.subheader("Post-Break Model Performance Comparison")
+st.caption(
+    "Model performance evaluated using data from January 2025 onward "
+    "with a chronological train/test split."
+)
+
 st.dataframe(results, use_container_width=True)
 
 # Forecast horizon selector
