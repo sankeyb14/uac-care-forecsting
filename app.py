@@ -121,13 +121,40 @@ error_ranges = dict(
 
 error = error_ranges[horizon]
 
-# Baseline forecast
+# MODEL TOGGLE
+future_model_forecasts = pd.read_csv(
+    "post_break_future_model_forecasts.csv"
+)
+
+model_options = {
+    "Naive Persistence": "Naive_Persistence",
+    "Random Forest": "Random_Forest",
+    "Gradient Boosting": "Gradient_Boosting"
+}
+
+selected_model = st.selectbox(
+    "Select Forecast Model",
+    list(model_options.keys())
+)
+
+selected_column = model_options[selected_model]
+
+selected_forecast_value = future_model_forecasts.loc[
+    future_model_forecasts["Horizon"] == horizon,
+    selected_column
+].iloc[0]
+
+# Forecast display data
 forecast_data = pd.DataFrame({
-    'Step': range(1, horizon + 1),
-    'HHS Forecast': [latest_hhs] * horizon,
-    'Lower Range': [max(0, latest_hhs - error)] * horizon,
-    'Upper Range': [latest_hhs + error] * horizon,
-    'Discharge Forecast': [latest_discharge] * horizon
+    'Step': [horizon],
+    'HHS Forecast': [selected_forecast_value],
+    'Lower Range': [
+        max(0, selected_forecast_value - error)
+    ],
+    'Upper Range': [
+        selected_forecast_value + error
+    ],
+    'Discharge Forecast': [latest_discharge]
 })
 
 # Display forecast
