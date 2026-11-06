@@ -45,9 +45,7 @@ The analysis evaluates multiple forecasting approaches, including:
 - ARIMA
 - Moving Average
 
-Model performance is evaluated using metrics including MAE, RMSE, and MAPE where appropriate.
-
-The analysis places particular emphasis on the post-break operating period because historical demand showed a substantial change in January 2025.
+Model-selection results should be interpreted in the context of the available validation samples and forecast horizon. The dashboard presents model forecasts as comparative planning signals rather than as evidence that one model universally outperforms another.
 
 ## Key Findings
 
