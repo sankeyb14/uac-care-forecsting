@@ -53,7 +53,7 @@ The analysis places particular emphasis on the post-break operating period becau
 
 The analysis identified a major structural change in UAC care demand around January 2025, with average HHS care declining substantially compared with the earlier period.
 
-Post-break validation showed that **Naive Persistence performed strongly at short horizons**, while Random Forest achieved lower error than Naive Persistence at the 14-observation horizon in the lightweight multi-horizon validation sample.
+Post-break validation showed that **Naive Persistence performed strongly at the 1- and 7-observation horizons in the available post-break validation results**. Model comparisons at longer horizons should be interpreted cautiously because the validation samples were not identical across models.
 
 Discharge forecasting showed substantially lower absolute errors than the care-load forecasting task, although MAPE is less informative for low-volume discharge counts and should therefore be interpreted cautiously.
 
