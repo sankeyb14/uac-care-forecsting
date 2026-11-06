@@ -547,9 +547,10 @@ st.markdown("""
   tested models.
 
 - **Model comparison:** Naive Persistence showed the strongest
-  short-horizon performance, while Random Forest achieved lower error
-  than Naive Persistence at the 14-observation horizon in the
-  post-break validation.
+  performance at the 1- and 7-observation horizons in the available
+  post-break validation results. Model comparisons at longer horizons
+  should be interpreted cautiously because the validation samples were
+  not identical across models.
 
 - **Robustness of the baseline:** A March 2025 sensitivity check also
   showed Naive Persistence outperforming both Random Forest and
