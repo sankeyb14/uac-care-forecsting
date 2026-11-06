@@ -12,7 +12,7 @@ The primary objective is to answer:
 
 - How has UAC care demand changed over time?
 - What relationship exists between care load, transfers, and discharges?
-- Is there evidence of a structural change in demand?
+- Is there evidence of a sustained change in the level of demand?
 - What does near-term care demand look like?
 - How reliable are the forecasting approaches?
 - What operational pressure scenarios can be identified from the available data?
@@ -24,7 +24,7 @@ The project includes:
 - Historical UAC care-load analysis
 - Transfers vs. discharge analysis
 - Data-quality and reporting-coverage assessment
-- Structural-break analysis
+- Care-load level-change analysis
 - Forecasting using multiple approaches
 - Post-break model comparison
 - Multi-horizon validation
@@ -49,7 +49,7 @@ Model-selection results should be interpreted in the context of the available va
 
 ## Key Findings
 
-The analysis identified a major structural change in UAC care demand around January 2025, with average HHS care declining substantially compared with the earlier period.
+The analysis identified a major decline in HHS care during January–February 2025, followed by a more stable, much lower level from March 2025 onward. No formal statistical break test was performed.
 
 Post-break validation showed that **Naive Persistence performed strongly at the 1- and 7-observation horizons in the available post-break validation results**. Model comparisons at longer horizons should be interpreted cautiously because the validation samples were not identical across models.
 
@@ -88,10 +88,11 @@ The analysis is subject to several limitations:
 
 1. The dataset contains missing calendar dates and reporting gaps.
 2. Facility capacity thresholds were not available.
-3. The January 2025 structural change limits the usefulness of models trained primarily on the earlier operating regime.
+3. The January 2025 - February decline limits the usefulness of models trained primarily on the earlier operating regime.
 4. Multi-step forecasts show increasing error with longer horizons.
 5. MAPE can be misleading for low-volume discharge counts.
 6. Scenario analysis represents statistical operating scenarios and should not be interpreted as probabilistic forecasts.
+7. Validation observations come from a stable period (Oct–Dec 2025) with no surges.
 
 ## Technology
 
@@ -111,3 +112,9 @@ The interactive dashboard is available through the project's Streamlit deploymen
 ## Repository
 
 [GitHub Repository](https://github.com/sankeyb14/uac-care-forecsting)
+
+## Notebook-to-output map
+01_data_audit.ipynb: cleaned_dataset.csv, model_comparison.csv, walk_forward_validation.csv, future_forecast.csv
+01_data_audit (1).ipynb: the above plus expanded_validation.csv, yearly_mae_results.csv, yearly_mape_results.csv
+02_modeling_and_validation.ipynb: the full-period outputs (model_comparison_updated, multi_horizon_validation, time_series_decomposition, discharge_*, early_warning_indicators, capacity_limitation_assessment, forecast_uncertainty, future_hhs_forecast)
+02_modeling_and_validation (1).ipynb: the post_break_* outputs used by the dashboard
